@@ -6,6 +6,7 @@ const data = {
   mostPopularPosts: [
     "https://www.thetoolbully.com/posts/2021-08-01-woodworking-tools-for-beginners",
   ],
+  googleAnalyticsId: "G-J8TXZQYY1S",
 };
 
 export default data;

@@ -8,6 +8,7 @@ import Hero from "../../../components/postHero";
 import BuyButton from "../../../components/buyButton";
 import Image from "../../../components/image";
 import Navigation from "../../../components/header";
+import Footer from "../../../components/footer";
 
 type Props = {
   source: any;
@@ -52,6 +53,7 @@ export default function Index({ source, meta }: Props) {
           </>
         ) : null}
       </div>
+      <Footer />
     </>
   );
 }

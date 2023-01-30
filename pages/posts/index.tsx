@@ -49,7 +49,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
               <p className="text-sm text-gray-500">
                 {/* <time dateTime={post.date}>{post.date}</time> */}
               </p>
-              <a href="#" className="mt-2 block">
+              <a href={`/posts/${post.slug}`} className="mt-2 block">
                 <p className="text-xl font-semibold text-gray-900">
                   {post.title}
                 </p>
@@ -57,7 +57,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
               </a>
               <div className="mt-3">
                 <Link
-                  href={post.slug}
+                  href={`/posts/${post.slug}`}
                   className="text-base font-semibold text-primary-600 hover:text-primary-500"
                 >
                   Read full story

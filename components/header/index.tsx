@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import site from "../../utils/sitedata";
+import Logo from "../logo";
 
 type Props = {};
 
@@ -26,13 +27,7 @@ export default function Index() {
         >
           <div className="flex lg:min-w-0 lg:flex-1" aria-label="Global">
             <Link href="/" className="-m-1.5 p-1.5">
-              <Image
-                src="/logo.webp"
-                width={100}
-                height={100}
-                alt={site.name}
-                className=""
-              />
+              <Logo />
             </Link>
           </div>
           <div className="flex lg:hidden">
