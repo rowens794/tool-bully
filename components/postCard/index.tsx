@@ -34,10 +34,14 @@ export default function index({ post }: Props) {
       </div>
       <div className="bg-primary-50 absolute -bottom-8 -left-4 z-20  w-3/4 py-2 text-primary-900 rounded-sm border border-primary-700 group-hover:scale-105 transition-transform shadow-2xl">
         <h4 className={`  text-sm `}>
-          <span className=" block mb-2 mx-2">{post.title}</span>
+          <span className="block font-light mb-2 mx-2">{post.title}</span>
         </h4>
-        <span className="block text-xs font-light ml-4">By: {post.author}</span>
-        <span className="block text-xs font-light ml-4">{post.date}</span>
+        <span className="text-xs font-light ml-4 hidden sm:block">
+          By: {post.author}
+        </span>
+        <span className="hidden sm:block text-xs font-light ml-4">
+          {post.date}
+        </span>
       </div>
 
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-primary-700 to-secondary-600 opacity-75 z-10 shadow-lg" />

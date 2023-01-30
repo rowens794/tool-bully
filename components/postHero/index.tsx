@@ -18,8 +18,6 @@ export default function index({
   date,
 }: Props) {
   let imageArr = images.split(" | ");
-  console.log(imageArr);
-
   return (
     <div className="relative mt-16">
       <div className="max-w-5xl mx-auto my-16 grid grid-cols-2 py-8 px-8 shadow-2xl aspect-video overflow-hidden">
@@ -40,7 +38,7 @@ export default function index({
       </div>
       <AuthorBlock author={author} authorImage={authorImage} date={date} />
       <h1
-        className={`absolute bottom-6 left-8 z-20 font-extrabold w-3/4 text-white `}
+        className={`absolute bottom-6 left-8 z-20 font-semibold sm:font-extrabold w-3/4 text-white text-lg sm:text-2xl lg:text-5xl`}
       >
         <span className="bg-yellow-500 block p-2">{postTitle}</span>
       </h1>

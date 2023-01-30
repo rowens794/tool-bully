@@ -46,7 +46,7 @@ export default function Index({ source, meta }: Props) {
               authorImage={meta.authorImage}
               date={meta.date}
             />
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-4xl mx-auto mx-4">
               {/*@ts-ignore */}
               <MDXRemote {...pageSource} components={components} />
             </div>

@@ -23,12 +23,12 @@ export default function Example({ posts, mostRecent }: Props) {
         <meta name="description" content={site.tagline} />
         <title>{site.name}</title>
       </Head>
-      <div className="isolate bg-white">
+      <div className="bg-white">
         <Navigation />
-        <main>
+        <main className="mx-4 mx-auto">
           <Hero mostRecent={mostRecent} />
           <h2 className="max-w-5xl mx-auto ">Recent Posts</h2>
-          <div className="max-w-5xl mx-auto grid grid-cols-2 gap-8 px-8">
+          <div className="max-w-5xl mx-auto grid sm:grid-cols-2 gap-8 px-8">
             {posts.map((post) => (
               <PostCard post={post} key={post.productID} />
             ))}

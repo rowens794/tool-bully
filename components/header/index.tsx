@@ -19,7 +19,7 @@ export default function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="px-6 pt-6 lg:px-8">
+    <div className="px-6 pt-6 lg:px-8 max-w-7xl mx-auto">
       <div>
         <nav
           className="flex h-9 items-center justify-between"
@@ -60,7 +60,7 @@ export default function Index() {
 
         {/* mobile navigation */}
         <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-          <Dialog.Panel className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden">
+          <Dialog.Panel className="fixed inset-0 z-50 overflow-y-auto bg-white px-6 py-6 lg:hidden">
             <div className="flex h-9 items-center justify-between">
               <div className="flex">
                 <Link href="/" className="-m-1.5 p-1.5">
