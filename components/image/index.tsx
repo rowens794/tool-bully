@@ -11,7 +11,7 @@ export default function index({ src, alt }: Props) {
         alt={alt}
         width={400}
         height={300}
-        className="mx-auto rounded-md overflow-hidden my-8"
+        className="mx-auto rounded-md overflow-hidden my-8 lg:max-h-[450px] max-h-[300px] object-contain width-full"
       />
     </div>
   );

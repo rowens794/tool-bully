@@ -26,14 +26,14 @@ export default function index({
           alt="hero1"
           width={400}
           height={300}
-          className="mx-auto bg-blue-500 bg-blend-overlay"
+          className="mx-auto max-h-[600px] object-contain width-full"
         />
         <Image
           src={`/postImages/${imageArr[1]}`}
           alt="hero1"
           width={400}
           height={300}
-          className="mx-auto "
+          className="mx-auto max-h-[600px] object-contain width-full"
         />
       </div>
       <AuthorBlock author={author} authorImage={authorImage} date={date} />
