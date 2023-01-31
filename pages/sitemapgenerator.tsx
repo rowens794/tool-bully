@@ -31,24 +31,29 @@ function generateSiteMap(posts: any) {
  `;
 }
 
-function SiteMap() {
-  // getServerSideProps will do the heavy lifting
+function SiteMap({ sitemap }: { sitemap: any }) {
+  // We return the XML sitemap as xml
+  return (
+    <div>
+      <p>no content</p>
+    </div>
+  );
 }
 
-export async function getServerSideProps({ res }: { res: any }) {
+export async function getStaticProps() {
   // We make an API call to gather the URLs for our site
   const posts = await retrievePosts();
 
   // We generate the XML sitemap with the posts data
   const sitemap = generateSiteMap(posts);
 
-  res.setHeader("Content-Type", "text/xml");
-  // we send the XML to the browser
-  res.write(sitemap);
-  res.end();
+  //save the sitemap to a file in the public folder
+  fs.writeFileSync("public/sitemap.xml", sitemap);
 
   return {
-    props: {},
+    props: {
+      sitemap,
+    },
   };
 }
 
