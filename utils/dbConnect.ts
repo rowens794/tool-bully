@@ -2,6 +2,7 @@
 import mongoose from "mongoose";
 import { ProductSchema } from "../models/Product";
 import { ReviewSchema } from "../models/Review";
+import { GenerationSchema } from "../models/Generation";
 
 //import the data models
 let connection = {}; /* creating connection object*/
@@ -35,9 +36,6 @@ export const dataDbConnection = async () => {
       console.log("dataDB connection exists");
       res(dataConnection);
     } else {
-      console.log("dataDB connection does not exist");
-      /* connecting to our database */
-
       dataConnection = await mongoose.createConnection(
         //@ts-ignore
         process.env.MONGODB,
@@ -48,12 +46,12 @@ export const dataDbConnection = async () => {
         }
       );
 
-      console.log("dataDB connection created");
-
       //@ts-ignore
       await dataConnection.model("Product", ProductSchema);
       //@ts-ignore
       await dataConnection.model("Review", ReviewSchema);
+      //@ts-ignore
+      await dataConnection.model("Generation", GenerationSchema);
 
       res(dataConnection);
     }

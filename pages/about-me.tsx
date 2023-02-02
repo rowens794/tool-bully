@@ -57,12 +57,10 @@ const Hero = ({ mostRecent }: { mostRecent: string }) => {
               enthusiasts and woodworkers.{" "}
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600 sm:text-left">
-              Doug only promotes products that he believes in and uses himself,
-              and he&apos;s always transparent about his affiliate relationship
-              with Amazon. At The Tool Bully, our goal is to help you find the
-              tools you need to tackle your next project with confidence. So
-              whether you&apos;re a seasoned pro or just starting out, join us
-              on our mission to become the ultimate tool bully.
+              At The Tool Bully, our goal is to help you find the tools you need
+              to tackle your next project with confidence. So whether
+              you&apos;re a seasoned pro or just starting out, join us on our
+              mission to become the ultimate tool bully.
             </p>
             <div className="mt-8 flex gap-x-4 sm:justify-center flex-col sm:flex-row gap-2">
               <Link

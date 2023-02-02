@@ -59,7 +59,7 @@ const getPageHtmlViaZenScrape = (
 ): Promise<string | null> => {
   return new Promise(async (res, rej) => {
     var headers = {
-      apikey: "6655e550-6ac4-11ed-b4d7-c1a6763e5675",
+      apikey: process.env.ZEN_SCRAPE_KEY,
     };
 
     var options = {
