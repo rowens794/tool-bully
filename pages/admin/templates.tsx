@@ -1,4 +1,4 @@
-import SideBar from "../../admin-components/sidebar";
+import Sidebar from "../../components/adminSidebar";
 
 export default function Example() {
   return (
@@ -6,7 +6,7 @@ export default function Example() {
       <div>
         {/* Static sidebar for desktop */}
         <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
-          <SideBar />
+          {/* <SideBar /> */}
         </div>
       </div>
     </>
