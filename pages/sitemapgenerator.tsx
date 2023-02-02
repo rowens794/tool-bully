@@ -75,9 +75,7 @@ const retrievePosts = async (): Promise<any[]> => {
         const { data, content } = matter(fileContents);
 
         if (data.date) data.date = dayjs(data.date).format("MMMM D, YYYY");
-        if (list.length < 10) {
-          list.push(data);
-        }
+        list.push(data);
       }
 
       resolve(list);
