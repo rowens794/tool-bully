@@ -10,13 +10,18 @@ export const createProductImages = async (product: any): Promise<string[]> => {
         let filename = getImageFilename(product.images[i].link);
         let imageExists = filename ? await checkIfImageExists(filename) : null;
         if (filename && !imageExists) {
-          await downloadImageAndSave(product.images[i].link, filename);
+          let resFilename = await downloadImageAndSave(
+            product.images[i].link,
+            filename
+          );
 
           //sleep for 1 second
-          await new Promise((r) => setTimeout(r, 1000));
-        }
+          await new Promise((r) => setTimeout(r, 250));
 
-        successfullySavedImages.push(filename ? filename : "");
+          if (resFilename !== "") {
+            successfullySavedImages.push(resFilename);
+          }
+        }
       }
     }
 
@@ -30,19 +35,26 @@ const downloadImageAndSave = async (
   filename: string
 ): Promise<string> => {
   return new Promise(async (res, rej) => {
+    let encodedUrl = encodeURI(url);
+    let fullUrl = `https://app.zenscrape.com/api/v1/get?apikey=${process.env.ZEN_SCRAPE_KEY}&url=${encodedUrl}`;
     axios({
       method: "GET",
-      url: url,
+      url: fullUrl,
       responseType: "stream",
-    }).then((response: any) => {
-      response.data.pipe(
-        fs.createWriteStream(`./public/postImages/${filename}`)
-      );
-      response.data.on("end", () => {
-        console.log(`${filename} downloaded and saved`);
-        res(filename);
+    })
+      .then((response: any) => {
+        response.data.pipe(
+          fs.createWriteStream(`./public/postImages/${filename}`)
+        );
+        response.data.on("end", () => {
+          console.log(`${filename} downloaded and saved`);
+          res(filename);
+        });
+      })
+      .catch((err: any) => {
+        console.log("error downloading image", url);
+        res("");
       });
-    });
   });
 };
 
