@@ -182,14 +182,18 @@ heroImages: ${post.productImages[0] ? post.productImages[0] : ""} | ${
           postContent +
           "\n\n" +
           section +
-          `<Image src='${post.productImages[i]}' alt='${post.title}' width='600' height='600' />`;
+          `<Image src='${post.productImages[i]}' alt='${removeApostrophes(
+            post.title
+          )}' width='600' height='600' />`;
       } else {
         postContent =
           postContent +
           "\n\n" +
           section +
           `<BuyButton affiliateLink='${post.affiliateLink}' />`;
-        +`<Image src='${post.productImages[i]}' alt='${post.title}' width='600' height='600' />`;
+        +`<Image src='${post.productImages[i]}' alt='${removeApostrophes(
+          post.title
+        )}' width='600' height='600' />`;
       }
     } else {
       postContent = postContent + "\n\n" + section;
@@ -217,4 +221,12 @@ const createSlug = (title: string) => {
   //make lowercase
   slug = slug.toLowerCase();
   return slug;
+};
+
+const removeApostrophes = (text: string) => {
+  return text.replace(/'/g, "");
+};
+
+const removeColons = (text: string) => {
+  return text.replace(/:/g, "");
 };
