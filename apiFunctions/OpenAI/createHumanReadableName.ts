@@ -1,4 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
+import { dataDbConnection } from "../../utils/dbConnect";
 
 export const createHumanReadableName = async (
   rawProductName: string
@@ -8,6 +9,19 @@ export const createHumanReadableName = async (
     console.log(rawProductName);
 
     let humanReadableName = await makeOpenAIRequest(rawProductName);
+
+    //save the generation to the database
+    let db = await dataDbConnection();
+    //@ts-ignore
+    await db.collection("generations").insertOne({
+      asin: "",
+      product: "",
+      generationID: "",
+      generationType: "humanReadableName",
+      generationInput: rawProductName,
+      generationOutput: humanReadableName,
+      requires: [],
+    });
 
     res(humanReadableName);
   });

@@ -30,8 +30,6 @@ export default function index({}: Props) {
     }
 
     await writePosts(productIds);
-
-    console.log(productIds);
   };
 
   return (

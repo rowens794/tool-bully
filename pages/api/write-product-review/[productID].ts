@@ -30,7 +30,6 @@ export default async function handler(
   console.log("hit");
   //get the product ID from the request
   let { productID } = req.query;
-  let db = await dataDbConnection();
   productID = productID ? productID.toString() : "";
   let affiliateLink = `https://www.amazon.com/dp/${productID}?tag=${process.env.AMAZON_TRACKING_ID}`;
 
@@ -213,6 +212,8 @@ const createSlug = (title: string) => {
   let slug = title.replace(/[^a-zA-Z0-9 ]/g, "");
   //replace all spaces with dashes
   slug = slug.replace(/ /g, "-");
+  //replace all double dashes with single dashes
+  slug = slug.replace(/--/g, "-");
   //make lowercase
   slug = slug.toLowerCase();
   return slug;

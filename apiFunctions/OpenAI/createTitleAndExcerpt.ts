@@ -1,4 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
+import { dataDbConnection } from "../../utils/dbConnect";
 
 export const createTitleAndExcerpt = async (
   intro: string
@@ -9,8 +10,22 @@ export const createTitleAndExcerpt = async (
   return new Promise(async (res, rej) => {
     console.log("creating title and excerpt");
 
-    let generalDescription = await makeOpenAIRequest(intro);
-    const parsedObj = createObj(generalDescription);
+    let titleExcerpt = await makeOpenAIRequest(intro);
+    const parsedObj = createObj(titleExcerpt);
+
+    //save the generation to the database
+    let db = await dataDbConnection();
+
+    //@ts-ignore
+    await db.collection("generations").insertOne({
+      asin: "",
+      product: "",
+      generationID: "",
+      generationType: "titleAndExcerpt",
+      generationInput: intro,
+      generationOutput: titleExcerpt,
+      requires: [],
+    });
 
     res(parsedObj);
   });

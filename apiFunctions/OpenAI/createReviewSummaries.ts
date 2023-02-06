@@ -1,11 +1,25 @@
 const { Configuration, OpenAIApi } = require("openai");
+import { dataDbConnection } from "../../utils/dbConnect";
 
 export const createReviewSummaries = async (reviews: any): Promise<string> => {
   return new Promise(async (res, rej) => {
     const reviewsString = formatReviews(reviews);
-    let generalDescription = await makeOpenAIRequest(reviewsString);
+    let reviewSummaries = await makeOpenAIRequest(reviewsString);
 
-    res(generalDescription);
+    //save the generation to the database
+    let db = await dataDbConnection();
+    //@ts-ignore
+    await db.collection("generations").insertOne({
+      asin: "",
+      product: "",
+      generationID: "",
+      generationType: "reviewSummaries",
+      generationInput: reviewsString,
+      generationOutput: reviewSummaries,
+      requires: [],
+    });
+
+    res(reviewSummaries);
   });
 };
 

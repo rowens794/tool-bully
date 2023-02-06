@@ -5,7 +5,8 @@ export const GenerationSchema = new Schema({
   product: { type: String },
   generationID: { type: String },
   generationType: { type: String },
-  prompt: { type: String },
+  generationInput: { type: String },
+  generationOutput: { type: String },
   requires: { type: Array },
 });
 
@@ -13,9 +14,12 @@ let Generation =
   (models && models.Generation) || model("Generation", GenerationSchema);
 
 export interface GenerationInt {
+  asin: string;
+  product: string;
   generationID: string;
   generationType: string;
-  prompt: string;
+  generationInput: string;
+  generationOutput: string;
   requires: string[];
 }
 

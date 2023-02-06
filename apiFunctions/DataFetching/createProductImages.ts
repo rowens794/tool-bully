@@ -16,7 +16,7 @@ export const createProductImages = async (product: any): Promise<string[]> => {
           );
 
           //sleep for 1 second
-          await new Promise((r) => setTimeout(r, 250));
+          await new Promise((r) => setTimeout(r, 1000));
 
           if (resFilename !== "") {
             successfullySavedImages.push(resFilename);
@@ -25,7 +25,6 @@ export const createProductImages = async (product: any): Promise<string[]> => {
       }
     }
 
-    console.log(successfullySavedImages);
     res(successfullySavedImages);
   });
 };
@@ -36,7 +35,8 @@ const downloadImageAndSave = async (
 ): Promise<string> => {
   return new Promise(async (res, rej) => {
     let encodedUrl = encodeURI(url);
-    let fullUrl = `https://app.zenscrape.com/api/v1/get?apikey=${process.env.ZEN_SCRAPE_KEY}&url=${encodedUrl}`;
+    let fullUrl = `http://api.scraperapi.com?api_key=${process.env.SCRAPER_API}&url=${encodedUrl}`;
+    console.log(fullUrl);
     axios({
       method: "GET",
       url: fullUrl,
@@ -52,6 +52,7 @@ const downloadImageAndSave = async (
         });
       })
       .catch((err: any) => {
+        console.log(err);
         console.log("error downloading image", url);
         res("");
       });

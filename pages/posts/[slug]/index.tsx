@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import fs from "fs";
+import Head from "next/head";
+
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 import { extractDocDetails } from "../../../utils/extractDocDetails";
@@ -31,8 +33,14 @@ export default function Index({ source, meta }: Props) {
 
   useEffect(() => setPageSource(source), [source]);
 
+  // console.log(pageSource);
+
   return (
     <>
+      <Head>
+        <title>{meta.title}</title>
+      </Head>
+
       <div className="max-w-7xl mx-auto">
         <Navigation />
       </div>

@@ -1,4 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
+import { dataDbConnection } from "../../utils/dbConnect";
 
 export const createProductIntro = async (
   productPage: any,
@@ -7,12 +8,25 @@ export const createProductIntro = async (
   return new Promise(async (res, rej) => {
     console.log("creating product intro");
 
-    let generalDescription = await makeOpenAIRequest(
-      productPage,
-      humanReadableName
-    );
+    let productIntro = await makeOpenAIRequest(productPage, humanReadableName);
 
-    res(generalDescription);
+    //save the generation to the database
+    let db = await dataDbConnection();
+    //@ts-ignore
+    await db.collection("generations").insertOne({
+      asin: "",
+      product: "",
+      generationID: "",
+      generationType: "productIntro",
+      generationInput: JSON.stringify({
+        description: productPage.description,
+        humanReadableName,
+      }),
+      generationOutput: productIntro,
+      requires: [],
+    });
+
+    res(productIntro);
   });
 };
 

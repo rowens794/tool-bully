@@ -1,4 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
+import { dataDbConnection } from "../../utils/dbConnect";
 
 export const createProductReviewSummary = async (
   productReviews: string,
@@ -11,6 +12,23 @@ export const createProductReviewSummary = async (
       productReviews,
       productName
     );
+
+    //save the generation to the database
+    let db = await dataDbConnection();
+
+    //@ts-ignore
+    await db.collection("generations").insertOne({
+      asin: "",
+      product: "",
+      generationID: "",
+      generationType: "productReviewSummary",
+      generationInput: JSON.stringify({
+        productReviews,
+        productName,
+      }),
+      generationOutput: productReviewSummary,
+      requires: [],
+    });
 
     res(productReviewSummary);
   });

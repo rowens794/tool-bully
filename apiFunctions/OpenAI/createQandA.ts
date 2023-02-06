@@ -1,4 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
+import { dataDbConnection } from "../../utils/dbConnect";
 
 export const createQandA = async (
   reviewIdeas: string,
@@ -23,6 +24,19 @@ export const createQandA = async (
     }
 
     let formattedResponse = makeOpenAIFormatRequest(splitQandA.join(""));
+
+    //save the generation to the database
+    let db = await dataDbConnection();
+    //@ts-ignore
+    await db.collection("generations").insertOne({
+      asin: "",
+      product: "",
+      generationID: "",
+      generationType: "qAndA",
+      generationInput: JSON.stringify({ reviewIdeas, productName }),
+      generationOutput: formattedResponse,
+      requires: [],
+    });
 
     res(formattedResponse);
   });
