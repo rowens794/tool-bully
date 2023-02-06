@@ -105,6 +105,8 @@ const retrievePosts = async () => {
         list.push(data);
       }
 
+      console.log(list);
+
       resolve(list);
     });
   });
