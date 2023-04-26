@@ -50,7 +50,7 @@ const writePosts = async (productIds: string[]) => {
   return new Promise(async (res, rej) => {
     for (let i = 0; i < productIds.length; i++) {
       const productId = productIds[i];
-      await axios.post(
+      axios.post(
         `http://localhost:3000/api/write-product-review/${productId}`,
         {
           productId,

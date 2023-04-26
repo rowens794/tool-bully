@@ -46,10 +46,10 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
         <div className="mt-6 grid gap-16 pt-10 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-12">
           {posts.map((post) => (
             <div key={post.title}>
-              <p className="text-sm text-gray-500">
-                {/* <time dateTime={post.date}>{post.date}</time> */}
+              <p className="text-sm text-gray-500 pb-0 font-light">
+                <time dateTime={post.date}>{post.date}</time>
               </p>
-              <a href={`/posts/${post.slug}`} className="mt-2 block">
+              <a href={`/posts/${post.slug}`} className="mt-0 block">
                 <p className="text-xl font-semibold text-gray-900">
                   {post.title}
                 </p>
@@ -105,7 +105,10 @@ const retrievePosts = async () => {
         list.push(data);
       }
 
-      console.log(list);
+      //sort list by post date
+      list = list.sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      });
 
       resolve(list);
     });

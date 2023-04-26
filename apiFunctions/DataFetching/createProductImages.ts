@@ -36,7 +36,6 @@ const downloadImageAndSave = async (
   return new Promise(async (res, rej) => {
     let encodedUrl = encodeURI(url);
     let fullUrl = `http://api.scraperapi.com?api_key=${process.env.SCRAPER_API}&url=${encodedUrl}`;
-    console.log(fullUrl);
     axios({
       method: "GET",
       url: fullUrl,
@@ -47,13 +46,11 @@ const downloadImageAndSave = async (
           fs.createWriteStream(`./public/postImages/${filename}`)
         );
         response.data.on("end", () => {
-          console.log(`${filename} downloaded and saved`);
           res(filename);
         });
       })
       .catch((err: any) => {
         console.log(err);
-        console.log("error downloading image", url);
         res("");
       });
   });

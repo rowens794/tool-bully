@@ -2,12 +2,19 @@ import Link from "next/link";
 import { useState } from "react";
 import dbConnect from "../../../utils/dbConnect";
 import Generation from "../../../models/Generation";
+import PostComponent, { PostComponentInt } from "../../../models/PostComponent";
 import Sidebar from "../../../components/adminSidebar";
 import SlideOver from "../../../components/slideOver";
 
 // import { PlusIcon } from "heroicons-react/outline";
 
-export default function Example() {
+interface Props {
+  postComponents: PostComponentInt[];
+}
+
+export default function Example({ postComponents }: Props) {
+  let [components, setComponents] = useState(postComponents);
+
   return (
     <>
       <div>
@@ -16,12 +23,18 @@ export default function Example() {
           <Sidebar />
         </div>
       </div>
-      <BodyContainer />
+      <BodyContainer components={components} setComponents={setComponents} />
     </>
   );
 }
 
-const BodyContainer = () => {
+const BodyContainer = ({
+  components,
+  setComponents,
+}: {
+  components: PostComponentInt[];
+  setComponents: Function;
+}) => {
   const [newComponentOpen, setNewComponentOpen] = useState(false);
 
   return (
@@ -34,7 +47,11 @@ const BodyContainer = () => {
             </h1>
           </div>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
-            <BodyContent setOpen={setNewComponentOpen} />
+            <BodyContent
+              setOpen={setNewComponentOpen}
+              components={components}
+              setComponents={setComponents}
+            />
           </div>
         </div>
         <SlideOver open={newComponentOpen} setOpen={setNewComponentOpen}>
@@ -45,7 +62,46 @@ const BodyContainer = () => {
   );
 };
 
-const BodyContent = ({ setOpen }: { setOpen: Function }) => {
+const BodyContent = ({
+  setOpen,
+  components,
+  setComponents,
+}: {
+  setOpen: Function;
+  components: PostComponentInt[];
+  setComponents: Function;
+}) => {
+  const createNewComponent = async () => {
+    let db = await dbConnect();
+
+    //create new component
+    //@ts-ignore
+    const newComponent = await PostComponent.create({
+      name: "New Component",
+      description: "This is a new component",
+      openai: {
+        prompt: "This is a prompt",
+        maxTokens: 10,
+        temperature: 0.9,
+        topP: 1,
+        frequencyPenalty: 0,
+        presencePenalty: 0,
+        stop: [""],
+      },
+    });
+
+    console.log(newComponent);
+
+    //add to components
+    setComponents([...components, newComponent]);
+
+    //close slide over
+    setOpen(false);
+
+    //save to db
+    await newComponent.save();
+  };
+
   return (
     <div className="py-4">
       <p>
@@ -54,11 +110,9 @@ const BodyContent = ({ setOpen }: { setOpen: Function }) => {
         generated.
       </p>
       <div className="rounded-lg border-4 border-dashed border-gray-200 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <ComponentCard />
-        <ComponentCard />
-        <ComponentCard />
-        <ComponentCard />
-        <ComponentCard />
+        {components.length > 0 &&
+          components.map((component, i) => <ComponentCard key={i} />)}
+
         <CreateNewComponent setOpen={setOpen} />
       </div>
     </div>
@@ -112,11 +166,11 @@ export async function getServerSideProps() {
 
   //get generations from mongodb
   //@ts-ignore
-  const generations = await Generation.find({});
-  console.log(generations);
+  const postComponents = await PostComponent.find({});
+  console.log(postComponents);
 
   return {
-    props: {},
+    props: { postComponents },
   };
 }
 

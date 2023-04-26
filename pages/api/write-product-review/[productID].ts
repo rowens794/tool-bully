@@ -27,7 +27,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  console.log("hit");
   //get the product ID from the request
   let { productID } = req.query;
   productID = productID ? productID.toString() : "";
@@ -53,6 +52,7 @@ export default async function handler(
     );
 
     let reviewSummaries = await createReviewSummaries(reviews);
+
     let qAndA = await createQandA(reviewSummaries, humanReadableName);
 
     let productIntroduction = await createProductIntro(
@@ -80,14 +80,14 @@ export default async function handler(
     //write the blog post to file
     await writePostToFile(
       {
-        title: titleExcerpt.title,
-        excerpt: titleExcerpt.excerpt,
-        hook: intro,
-        intro: productIntroduction,
-        productFeatures: productFeatures,
-        productReviewSummary: productReviewSummary,
-        technicalDetails: technicalDetails,
-        qAndA: qAndA,
+        title: titleExcerpt.title.replaceAll(":", ""),
+        excerpt: titleExcerpt.excerpt.replaceAll(":", ""),
+        hook: intro.replaceAll(":", ""),
+        intro: productIntroduction.replaceAll(":", ""),
+        productFeatures: productFeatures.replaceAll(":", ""),
+        productReviewSummary: productReviewSummary.replaceAll(":", ""),
+        technicalDetails: technicalDetails.replaceAll(":", ""),
+        qAndA: qAndA.replaceAll(":", ""),
         productImages: productImages,
         affiliateLink: affiliateLink,
       },

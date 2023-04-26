@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { ProductSchema } from "../models/Product";
 import { ReviewSchema } from "../models/Review";
 import { GenerationSchema } from "../models/Generation";
+import { PostComponentSchema } from "../models/PostComponent";
 
 //import the data models
 let connection = {}; /* creating connection object*/
@@ -52,6 +53,8 @@ export const dataDbConnection = async () => {
       await dataConnection.model("Review", ReviewSchema);
       //@ts-ignore
       await dataConnection.model("Generation", GenerationSchema);
+      //@ts-ignore
+      await dataConnection.model("PostComponent", PostComponentSchema);
 
       res(dataConnection);
     }
